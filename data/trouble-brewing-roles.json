@@ -1,0 +1,597 @@
+{
+  "script": "trouble-brewing",
+  "scriptName": "暗流涌动",
+  "scriptNameEn": "Trouble Brewing",
+  "description": "经典入门剧本，适合新手学习基础机制",
+
+  "roles": {
+    "townsfolk": [
+      {
+        "id": "washerwoman",
+        "name": "洗衣妇",
+        "nameEn": "Washerwoman",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "在首个夜晚，你会得知两名玩家，其中一名是特定的镇民角色。",
+        "abilityDetail": "说书人会指向两名玩家和一个镇民角色标记，两名玩家中有一名是该角色（另一名可能是任何角色）。",
+        "firstNight": {
+          "position": 10,
+          "action": "指向两名玩家和一个镇民角色标记",
+          "reminder": "这两名玩家中有一名是该镇民"
+        },
+        "otherNights": null,
+        "setup": false,
+        "infoType": "partial",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "洗衣妇的信息是游戏中最可靠的首夜信息之一，可以帮助确认其他玩家的身份。",
+        "strategy": {
+          "asTownsfolk": "首日可以考虑跳出来公开信息，建立信任链。但要警惕被下毒或醉酒的可能。",
+          "asEvil": "如果伪跳洗衣妇，要确保给出的信息不会立即被戳穿。"
+        }
+      },
+      {
+        "id": "librarian",
+        "name": "图书馆员",
+        "nameEn": "Librarian",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "在首个夜晚，你会得知两名玩家，其中一名是特定的外来者角色。",
+        "abilityDetail": "说书人会指向两名玩家和一个外来者角色标记，两名玩家中有一名是该角色。如果场上没有外来者，说书人会告诉你'0'。",
+        "firstNight": {
+          "position": 11,
+          "action": "指向两名玩家和一个外来者角色标记，或者显示'0'",
+          "reminder": "这两名玩家中有一名是该外来者"
+        },
+        "otherNights": null,
+        "setup": false,
+        "infoType": "partial",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "图书馆员能帮助识别外来者，这在判断场上配置时非常重要。如果得到'0'，说明场上没有外来者。",
+        "strategy": {
+          "asTownsfolk": "得到'0'信息时要小心，可能场上有酒鬼或男爵。",
+          "asEvil": "伪跳图书馆员说'0'是相对安全的选择。"
+        }
+      },
+      {
+        "id": "investigator",
+        "name": "调查员",
+        "nameEn": "Investigator",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "在首个夜晚，你会得知两名玩家，其中一名是特定的爪牙角色。",
+        "abilityDetail": "说书人会指向两名玩家和一个爪牙角色标记，两名玩家中有一名是该角色。即使场上没有该爪牙，说书人也会给出信息。",
+        "firstNight": {
+          "position": 12,
+          "action": "指向两名玩家和一个爪牙角色标记",
+          "reminder": "这两名玩家中有一名是该爪牙"
+        },
+        "otherNights": null,
+        "setup": false,
+        "infoType": "partial",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "调查员的信息直指邪恶阵营，非常强大。但要注意可能被间谍误导。",
+        "strategy": {
+          "asTownsfolk": "不要急于第一天就跳出来，可以观察被指认的玩家行为。",
+          "asEvil": "伪跳调查员风险较高，容易与真调查员对撞。"
+        }
+      },
+      {
+        "id": "chef",
+        "name": "厨师",
+        "nameEn": "Chef",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "在首个夜晚，你会得知邪恶玩家中有多少对相邻而坐。",
+        "abilityDetail": "说书人会告诉你一个数字（0-2），表示有多少对邪恶玩家坐在相邻位置。一名玩家可以被计入多对。",
+        "firstNight": {
+          "position": 13,
+          "action": "显示邪恶玩家相邻对数（0-2）",
+          "reminder": "邪恶玩家相邻的对数"
+        },
+        "otherNights": null,
+        "setup": false,
+        "infoType": "numerical",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "'0'意味着所有邪恶玩家都不相邻，'2'通常意味着三个邪恶玩家连坐。",
+        "strategy": {
+          "asTownsfolk": "结合其他信息确定邪恶玩家位置，数字越大线索越明显。",
+          "asEvil": "如果真厨师跳出来，可以根据实际座位评估其真假。"
+        }
+      },
+      {
+        "id": "empath",
+        "name": "共情者",
+        "nameEn": "Empath",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "每个夜晚，你会得知与你邻近的两名存活的邻居中，有多少位是邪恶的。",
+        "abilityDetail": "说书人每晚会告诉你一个数字（0、1或2），表示你左右两个存活邻居中邪恶玩家的数量。",
+        "firstNight": {
+          "position": 14,
+          "action": "显示邻近邪恶玩家数（0、1或2）",
+          "reminder": "邻近邪恶玩家的数量"
+        },
+        "otherNights": {
+          "position": 23,
+          "action": "显示邻近邪恶玩家数（0、1或2）",
+          "reminder": "更新邻近邪恶玩家数量"
+        },
+        "setup": false,
+        "infoType": "numerical",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "共情者持续获得信息，如果数字变化说明邻居死亡或状态改变。",
+        "strategy": {
+          "asTownsfolk": "每晚记录数字变化，可以推断邻居身份和死亡情况。",
+          "asEvil": "伪跳共情者需要仔细计算座位和死亡情况，容易露馅。"
+        }
+      },
+      {
+        "id": "fortune_teller",
+        "name": "占卜师",
+        "nameEn": "Fortune Teller",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "每个夜晚，你要选择两名玩家：你会得知他们之中是否有恶魔。会有一名善良玩家始终被你的能力视为恶魔。",
+        "abilityDetail": "每晚选择两名玩家，说书人会告诉你他们之中是否有恶魔。但有一名善良玩家（红鲱鱼）始终会被你误判为恶魔。",
+        "firstNight": {
+          "position": 15,
+          "action": "选择两名玩家，说书人指示是否有恶魔，并秘密标记一名善良玩家为红鲱鱼",
+          "reminder": "这两名玩家中有/没有恶魔"
+        },
+        "otherNights": {
+          "position": 24,
+          "action": "选择两名玩家，说书人指示是否有恶魔",
+          "reminder": "这两名玩家中有/没有恶魔"
+        },
+        "setup": false,
+        "infoType": "binary",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "redHerring": true,
+        "tips": "占卜师是暗流涌动最强镇民之一，但要警惕红鲱鱼。",
+        "strategy": {
+          "asTownsfolk": "前几晚广撒网，后期精准验人。找到红鲱鱼后你的信息会非常准确。",
+          "asEvil": "伪跳占卜师需要编造合理的验人路线，很容易与真占卜师对撞。"
+        }
+      },
+      {
+        "id": "undertaker",
+        "name": "送葬者",
+        "nameEn": "Undertaker",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "每个夜晚（首夜除外），你会得知今天白天被处决的玩家的角色。",
+        "abilityDetail": "如果白天有玩家被处决，当晚你会得知该玩家的真实角色（即使他是酒鬼也会显示酒鬼）。",
+        "firstNight": null,
+        "otherNights": {
+          "position": 28,
+          "action": "如果今天有玩家被处决，显示该玩家的角色标记",
+          "reminder": "今天被处决的玩家是这个角色"
+        },
+        "setup": false,
+        "infoType": "role",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "送葬者能确认被处决玩家的真实身份，帮助判断场上局势。",
+        "strategy": {
+          "asTownsfolk": "根据处决结果调整策略，如果处决的是镇民要反思投票逻辑。",
+          "asEvil": "伪跳送葬者可以误导好人，但要确保给出的角色合理。"
+        }
+      },
+      {
+        "id": "monk",
+        "name": "僧侣",
+        "nameEn": "Monk",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "每个夜晚（首夜除外），你要选择一名玩家（非你自己）：当晚该玩家不会因恶魔的能力而死亡。",
+        "abilityDetail": "每晚选择一名玩家保护（不能选自己），该玩家当晚免疫恶魔击杀。但不能防止其他方式的死亡。",
+        "firstNight": null,
+        "otherNights": {
+          "position": 5,
+          "action": "选择一名玩家（非自己）进行保护",
+          "reminder": "该玩家今晚免疫恶魔击杀"
+        },
+        "setup": false,
+        "infoType": "none",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "僧侣是少数能主动保护的角色，但不知道保护是否成功。",
+        "strategy": {
+          "asTownsfolk": "保护关键信息位或可能的目标，不要固定模式。",
+          "asEvil": "真僧侣很难证明自己，伪跳僧侣相对安全。"
+        }
+      },
+      {
+        "id": "ravenkeeper",
+        "name": "守鸦人",
+        "nameEn": "Ravenkeeper",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "如果你在夜晚死亡，你会被唤醒，然后要选择一名玩家：你会得知该玩家的角色。",
+        "abilityDetail": "当你在夜晚死亡时，会被唤醒选择一名玩家，得知其真实角色。白天死亡则无法触发。",
+        "firstNight": null,
+        "otherNights": {
+          "position": 29,
+          "action": "如果守鸦人今晚死亡，唤醒他选择一名玩家，显示该玩家的角色",
+          "reminder": "守鸦人得知了某玩家的角色"
+        },
+        "setup": false,
+        "infoType": "role",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "守鸦人死后能留下关键信息，是恶魔的威胁。",
+        "strategy": {
+          "asTownsfolk": "活着时可以适当跳身份引刀，死后验关键位。",
+          "asEvil": "守鸦人死后会验人，所以要小心击杀时机。"
+        }
+      },
+      {
+        "id": "virgin",
+        "name": "贞洁者",
+        "nameEn": "Virgin",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "当你首次被提名时，如果提名你的玩家是镇民，该玩家会立即被处决。",
+        "abilityDetail": "你第一次被提名时，如果提名者是镇民（非外来者/爪牙/恶魔），该镇民立即被处决且当天不再有其他处决。此能力只能触发一次。",
+        "firstNight": null,
+        "otherNights": null,
+        "setup": false,
+        "infoType": "triggered",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "贞洁者能力强大但只能用一次，触发后能确认提名者是镇民。",
+        "strategy": {
+          "asTownsfolk": "等待合适时机跳出，最好在可疑玩家提名时。但要警惕酒鬼和外来者。",
+          "asEvil": "伪跳贞洁者风险极高，一旦被提名就会露馅。"
+        }
+      },
+      {
+        "id": "slayer",
+        "name": "猎手",
+        "nameEn": "Slayer",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "每局游戏限一次，在白天时，你可以公开选择一名玩家：如果该玩家是恶魔，该玩家死亡。",
+        "abilityDetail": "整局游戏只能使用一次，白天公开宣布使用能力并选择目标。如果目标是恶魔则立即死亡，否则无事发生。",
+        "firstNight": null,
+        "otherNights": null,
+        "setup": false,
+        "infoType": "active",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "猎手能一枪毙敌直接获胜，但只有一次机会。",
+        "strategy": {
+          "asTownsfolk": "等到确信某人是恶魔时再开枪，失败会暴露身份。",
+          "asEvil": "真猎手很难伪装，恶魔要避免被猎手锁定。"
+        }
+      },
+      {
+        "id": "soldier",
+        "name": "士兵",
+        "nameEn": "Soldier",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "你不会因恶魔的能力而死亡。",
+        "abilityDetail": "被动能力，恶魔无法杀死你（但可以被处决或其他方式死亡）。你不会得知恶魔尝试击杀你。",
+        "firstNight": null,
+        "otherNights": null,
+        "setup": false,
+        "infoType": "passive",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "士兵是被动防御型角色，恶魔击杀你会浪费击杀次数。",
+        "strategy": {
+          "asTownsfolk": "适时跳出吸引恶魔刀，但要警惕被下毒或醉酒。",
+          "asEvil": "恶魔要识别士兵避免空刀，伪跳士兵可以拖延时间。"
+        }
+      },
+      {
+        "id": "mayor",
+        "name": "市长",
+        "nameEn": "Mayor",
+        "category": "townsfolk",
+        "team": "good",
+        "ability": "如果只有三名玩家存活且白天没有玩家被处决，善良阵营获胜。",
+        "abilityDetail": "当场上剩余3人（含你）且当天没有处决时，如果你是市长，善良阵营立即获胜。即使你已死亡也有效（如果你是死去的市长且投票权未用）。",
+        "firstNight": null,
+        "otherNights": null,
+        "setup": false,
+        "infoType": "passive",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "市长提供了善良阵营的额外胜利条件，终局时非常关键。",
+        "strategy": {
+          "asTownsfolk": "终局时要计算是否能触发市长胜利，有时故意不投票是最优解。",
+          "asEvil": "市长存在时，终局一定要推人，绝不能平票。"
+        }
+      }
+    ],
+
+    "outsiders": [
+      {
+        "id": "butler",
+        "name": "管家",
+        "nameEn": "Butler",
+        "category": "outsider",
+        "team": "good",
+        "ability": "每个夜晚，你要选择一名玩家（非你自己）：明天白天，你只能在该玩家投票时投票。",
+        "abilityDetail": "每晚选择一名玩家（你的主人），次日只能在主人投票后跟随投票。如果主人不投，你也不能投。",
+        "firstNight": {
+          "position": 16,
+          "action": "选择一名玩家作为主人",
+          "reminder": "明天白天只能跟随该玩家投票"
+        },
+        "otherNights": {
+          "position": 25,
+          "action": "选择一名玩家作为主人",
+          "reminder": "更新主人"
+        },
+        "setup": false,
+        "infoType": "restrictive",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "管家的投票受限，可能在关键投票时无法表达意愿。",
+        "strategy": {
+          "asTownsfolk": "选择可信的好人作为主人，确保能在关键时刻投票。",
+          "asEvil": "伪跳管家可以解释奇怪的投票行为。"
+        }
+      },
+      {
+        "id": "drunk",
+        "name": "酒鬼",
+        "nameEn": "Drunk",
+        "category": "outsider",
+        "team": "good",
+        "ability": "你不知道你是酒鬼。你以为你是一个镇民角色，但其实你不是。",
+        "abilityDetail": "游戏开始时你会拿到一个镇民角色标记和能力，但你实际上是酒鬼。你的所有信息都可能是错误的。你不知道自己是酒鬼。",
+        "firstNight": null,
+        "otherNights": null,
+        "setup": true,
+        "infoType": "drunk",
+        "canBeDrunk": false,
+        "canBePoisoned": true,
+        "tips": "酒鬼是善良阵营的最大干扰项，会获得错误信息但不自知。",
+        "strategy": {
+          "asTownsfolk": "如果你的信息总是不对，可能你是酒鬼。",
+          "asEvil": "可以利用酒鬼的存在性来质疑好人的信息。"
+        }
+      },
+      {
+        "id": "recluse",
+        "name": "隐士",
+        "nameEn": "Recluse",
+        "category": "outsider",
+        "team": "good",
+        "ability": "你可能会被当作邪恶阵营、爪牙或恶魔——即使你已经死亡。",
+        "abilityDetail": "你可能在任何时候被检测能力误判为邪恶/爪牙/恶魔，即使死后也可能。这完全由说书人决定。",
+        "firstNight": null,
+        "otherNights": null,
+        "setup": false,
+        "infoType": "passive",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "隐士会干扰检测类信息，让好人误判。",
+        "strategy": {
+          "asTownsfolk": "如果被检测为恶魔，及时跳隐士自证。但要小心真恶魔伪跳隐士。",
+          "asEvil": "隐士的存在让你有机会狡辩，但不要过度依赖。"
+        }
+      },
+      {
+        "id": "saint",
+        "name": "圣徒",
+        "nameEn": "Saint",
+        "category": "outsider",
+        "team": "good",
+        "ability": "如果你在白天被处决，善良阵营失败。",
+        "abilityDetail": "如果你被投票处决（不包括贞洁者能力或其他方式），游戏立即结束，邪恶阵营获胜。",
+        "firstNight": null,
+        "otherNights": null,
+        "setup": false,
+        "infoType": "triggered",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "圣徒是善良阵营的炸弹，处决他会直接输掉游戏。",
+        "strategy": {
+          "asTownsfolk": "跳圣徒可以避免被推，但过早跳会被恶魔利用。",
+          "asEvil": "伪跳圣徒可以避免被推，但真圣徒跳出来就尴尬了。"
+        }
+      }
+    ],
+
+    "minions": [
+      {
+        "id": "poisoner",
+        "name": "投毒者",
+        "nameEn": "Poisoner",
+        "category": "minion",
+        "team": "evil",
+        "ability": "每个夜晚，你要选择一名玩家：该玩家在当晚和次日白天都会中毒。",
+        "abilityDetail": "每晚选择一名玩家下毒，该玩家的能力失效且获得的信息可能错误。中毒持续到次日白天结束。",
+        "firstNight": {
+          "position": 17,
+          "action": "选择一名玩家下毒",
+          "reminder": "该玩家中毒"
+        },
+        "otherNights": {
+          "position": 7,
+          "action": "选择一名玩家下毒",
+          "reminder": "该玩家中毒（移除旧的中毒标记）"
+        },
+        "setup": false,
+        "infoType": "active",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "投毒者是暗流涌动最强爪牙，能持续干扰好人信息。",
+        "strategy": {
+          "asTownsfolk": "识别投毒者很难，要通过信息矛盾来推断。",
+          "asEvil": "优先下毒强力镇民（占卜师、共情者等），制造混乱。"
+        }
+      },
+      {
+        "id": "spy",
+        "name": "间谍",
+        "nameEn": "Spy",
+        "category": "minion",
+        "team": "evil",
+        "ability": "每个夜晚，你能看到魔典。你可能会被当作善良阵营、镇民或外来者——即使你已经死亡。",
+        "abilityDetail": "每晚能看到说书人的魔典（所有玩家的角色和状态）。同时你可能被检测能力误判为善良/镇民/外来者。",
+        "firstNight": {
+          "position": 18,
+          "action": "展示魔典",
+          "reminder": "间谍看到了所有角色"
+        },
+        "otherNights": {
+          "position": 26,
+          "action": "展示魔典",
+          "reminder": "间谍看到了所有角色"
+        },
+        "setup": false,
+        "infoType": "grimoire",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "间谍拥有上帝视角，能完美伪装和提供情报给恶魔。",
+        "strategy": {
+          "asTownsfolk": "间谍很难识别，因为他能伪装成任何角色。",
+          "asEvil": "利用魔典信息伪装成镇民，提供'真实'但误导的信息。"
+        }
+      },
+      {
+        "id": "scarlet_woman",
+        "name": "猩红女",
+        "nameEn": "Scarlet Woman",
+        "category": "minion",
+        "team": "evil",
+        "ability": "如果还有五名以上玩家存活（旅行者不计算在内）时恶魔死亡，你会变成恶魔。",
+        "abilityDetail": "当场上有5名及以上非旅行者玩家存活时，如果恶魔死亡（白天处决或夜晚死亡），你立即变成该恶魔。",
+        "firstNight": null,
+        "otherNights": {
+          "position": 19,
+          "action": "如果恶魔死亡且存活玩家≥5，猩红女变成恶魔",
+          "reminder": "猩红女变成了恶魔"
+        },
+        "setup": false,
+        "infoType": "passive",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "猩红女提供了邪恶阵营的容错空间，前期推掉恶魔不会立即获胜。",
+        "strategy": {
+          "asTownsfolk": "前期推掉恶魔要警惕猩红女，可能需要推第二次。",
+          "asEvil": "恶魔可以适当暴露吸引火力，让猩红女继承。"
+        }
+      },
+      {
+        "id": "baron",
+        "name": "男爵",
+        "nameEn": "Baron",
+        "category": "minion",
+        "team": "evil",
+        "ability": "会有额外的外来者在场。[+2外来者]",
+        "abilityDetail": "男爵在场时，游戏设置时会额外增加2名外来者（减少2名镇民）。这是设置阶段的能力。",
+        "firstNight": null,
+        "otherNights": null,
+        "setup": true,
+        "setupReminder": "+2外来者",
+        "infoType": "setup",
+        "canBeDrunk": false,
+        "canBePoisoned": false,
+        "tips": "男爵增加外来者数量，扰乱场上配置，让好人难以确定角色分布。",
+        "strategy": {
+          "asTownsfolk": "如果外来者数量异常多，可能有男爵。",
+          "asEvil": "男爵的存在让场上信息更混乱，有利于邪恶阵营。"
+        }
+      }
+    ],
+
+    "demons": [
+      {
+        "id": "imp",
+        "name": "小恶魔",
+        "nameEn": "Imp",
+        "category": "demon",
+        "team": "evil",
+        "ability": "每个夜晚（首夜除外），你要选择一名玩家：该玩家死亡。如果你因此自杀，一名爪牙会变成小恶魔。",
+        "abilityDetail": "每晚选择一名玩家击杀。你可以选择自己自杀，此时一名存活的爪牙会变成小恶魔。如果没有爪牙，你不能自杀。",
+        "firstNight": null,
+        "otherNights": {
+          "position": 20,
+          "action": "选择一名玩家击杀（可以是自己）",
+          "reminder": "该玩家死亡"
+        },
+        "setup": false,
+        "infoType": "active",
+        "canBeDrunk": true,
+        "canBePoisoned": true,
+        "tips": "小恶魔是最经典的恶魔，自杀传承机制让邪恶阵营有额外容错。",
+        "strategy": {
+          "asTownsfolk": "处决小恶魔前要确认是否有爪牙存活，否则可能杀不死。",
+          "asEvil": "合理利用自杀机制甩锅或躲避检测。"
+        }
+      }
+    ],
+
+    "travelers": [
+      {
+        "id": "scapegoat",
+        "name": "替罪羊",
+        "nameEn": "Scapegoat",
+        "category": "traveler",
+        "team": "good",
+        "ability": "如果有玩家即将被处决，你可以选择替代该玩家被处决。",
+        "abilityDetail": "当任何玩家即将被处决时，你可以宣布替代他被处决。",
+        "tips": "替罪羊可以救下关键角色，但自己会死亡。",
+        "isTraveler": true
+      },
+      {
+        "id": "bureaucrat",
+        "name": "官僚",
+        "nameEn": "Bureaucrat",
+        "category": "traveler",
+        "team": "good",
+        "ability": "每个夜晚，你要选择一名玩家（非你自己）：该玩家的投票在明天白天算作三票。",
+        "abilityDetail": "每晚选择一名玩家，次日他的投票权变为3票。",
+        "tips": "官僚能影响投票结果，但要小心给错人三票。",
+        "isTraveler": true
+      },
+      {
+        "id": "thief",
+        "name": "盗贼",
+        "nameEn": "Thief",
+        "category": "traveler",
+        "team": "evil",
+        "ability": "每个夜晚，你要选择一名玩家（非你自己）：该玩家的投票在明天白天不会被计入。",
+        "abilityDetail": "每晚选择一名玩家，次日他无法投票。",
+        "tips": "盗贼是邪恶旅行者，能剥夺投票权。",
+        "isTraveler": true
+      },
+      {
+        "id": "gunslinger",
+        "name": "枪手",
+        "nameEn": "Gunslinger",
+        "category": "traveler",
+        "team": "good",
+        "ability": "每局游戏限一次，在白天时，你可以公开选择一名玩家：该玩家死亡。",
+        "abilityDetail": "整局游戏只能使用一次，白天公开选择一名玩家，该玩家立即死亡。",
+        "tips": "枪手能白天击杀任何人，但只有一次机会。",
+        "isTraveler": true
+      }
+    ]
+  },
+
+  "metadata": {
+    "totalRoles": {
+      "townsfolk": 13,
+      "outsiders": 4,
+      "minions": 4,
+      "demons": 1,
+      "travelers": 4
+    },
+    "version": "1.0.0",
+    "lastUpdated": "2025-11-17"
+  }
+}

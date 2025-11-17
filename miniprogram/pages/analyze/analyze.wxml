@@ -1,0 +1,177 @@
+<!--分析页面 - 微信小程序界面-->
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <text class="title">🎭 血染钟楼 AI 助手</text>
+    <text class="subtitle">游戏状态分析</text>
+  </view>
+
+  <!-- 游戏信息 -->
+  <view class="game-info" wx:if="{{gameState}}">
+    <view class="info-row">
+      <text class="label">剧本：</text>
+      <text class="value">暗流涌动</text>
+    </view>
+    <view class="info-row">
+      <text class="label">玩家：</text>
+      <text class="value">{{gameState.players.length}}人</text>
+    </view>
+    <view class="info-row">
+      <text class="label">当前：</text>
+      <text class="value">第{{gameState.currentDay || '?'}}天</text>
+    </view>
+  </view>
+
+  <!-- 分析选项 -->
+  <view class="options">
+    <view class="option-item">
+      <text>使用AI深度分析（大模型）</text>
+      <switch checked="{{useLLM}}" bindchange="toggleLLM" />
+    </view>
+    <view class="option-tip">
+      <text class="tip-text">关闭后仅使用规则引擎，速度更快</text>
+    </view>
+  </view>
+
+  <!-- 分析按钮 -->
+  <button
+    class="analyze-btn"
+    type="primary"
+    bindtap="startAnalysis"
+    loading="{{loading}}"
+    disabled="{{loading || !gameState}}"
+  >
+    {{loading ? '分析中...' : '开始分析'}}
+  </button>
+
+  <!-- 错误信息 -->
+  <view class="error" wx:if="{{error}}">
+    <text class="error-icon">⚠️</text>
+    <text class="error-text">{{error}}</text>
+  </view>
+
+  <!-- 分析结果 -->
+  <view class="results" wx:if="{{analysisResult && !loading}}">
+    <!-- 矛盾检测 -->
+    <view class="result-section" wx:if="{{analysisResult.inference.contradictions.length > 0}}">
+      <view class="section-title">
+        <text class="icon">⚠️</text>
+        <text class="title-text">发现的矛盾</text>
+      </view>
+      <view class="contradiction-list">
+        <view
+          class="contradiction-item"
+          wx:for="{{analysisResult.inference.contradictions}}"
+          wx:key="index"
+        >
+          <view class="contradiction-severity severity-{{item.severity}}">
+            {{item.severity}}
+          </view>
+          <text class="contradiction-message">{{item.message}}</text>
+          <text class="contradiction-implication" wx:if="{{item.implication}}">
+            → {{item.implication}}
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 恶魔嫌疑 -->
+    <view class="result-section" wx:if="{{analysisResult.probability}}">
+      <view class="section-title">
+        <text class="icon">🎯</text>
+        <text class="title-text">恶魔嫌疑排名</text>
+      </view>
+      <view class="suspect-list">
+        <view
+          class="suspect-item"
+          wx:for="{{analysisResult.probability.mostLikelyDemon.topSuspects}}"
+          wx:for-item="suspect"
+          wx:for-index="idx"
+          wx:key="playerId"
+          wx:if="{{idx < 3}}"
+        >
+          <view class="suspect-rank">{{idx + 1}}</view>
+          <view class="suspect-info">
+            <text class="suspect-name">{{suspect.playerName}}</text>
+            <text class="suspect-prob">{{(suspect.demonProbability * 100).toFixed(1)}}% 概率</text>
+          </view>
+          <view class="suspect-bar">
+            <view
+              class="suspect-bar-fill"
+              style="width: {{suspect.demonProbability * 100}}%"
+            ></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- AI深度分析 -->
+    <view class="result-section" wx:if="{{analysisResult.llmAnalysis && analysisResult.llmAnalysis.analysis}}">
+      <view class="section-title">
+        <text class="icon">🤖</text>
+        <text class="title-text">AI 深度分析</text>
+      </view>
+      <view class="llm-analysis">
+        <text class="llm-text">{{analysisResult.llmAnalysis.analysis}}</text>
+      </view>
+      <view class="llm-info" wx:if="{{analysisResult.llmAnalysis.tokensUsed}}">
+        <text class="llm-tokens">
+          使用 {{analysisResult.llmAnalysis.tokensUsed.totalTokens}} tokens
+        </text>
+      </view>
+    </view>
+
+    <!-- 策略建议 -->
+    <view class="result-section" wx:if="{{analysisResult.strategy}}">
+      <view class="section-title">
+        <text class="icon">💡</text>
+        <text class="title-text">AI 建议</text>
+      </view>
+      <view class="strategy-list">
+        <!-- 今晚建议 -->
+        <view class="strategy-category" wx:if="{{analysisResult.strategy.tonight.length > 0}}">
+          <text class="category-title">【今晚能力使用】</text>
+          <view
+            class="strategy-item"
+            wx:for="{{analysisResult.strategy.tonight}}"
+            wx:key="index"
+          >
+            <text class="strategy-action">✓ {{item.action}}</text>
+            <text class="strategy-reason" wx:if="{{item.reason}}">
+              理由：{{item.reason}}
+            </text>
+          </view>
+        </view>
+
+        <!-- 明天建议 -->
+        <view class="strategy-category" wx:if="{{analysisResult.strategy.tomorrow.length > 0}}">
+          <text class="category-title">【明天白天策略】</text>
+          <view
+            class="strategy-item"
+            wx:for="{{analysisResult.strategy.tomorrow}}"
+            wx:key="index"
+            wx:if="{{index < 3}}"
+          >
+            <text class="strategy-action">✓ {{item.action}}</text>
+            <text class="strategy-reason" wx:if="{{item.reason}}">
+              理由：{{item.reason}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="action-btn" bindtap="copyResult">复制结果</button>
+      <button class="action-btn" open-type="share">分享</button>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{!gameState}}">
+    <text class="empty-icon">📝</text>
+    <text class="empty-text">请先录入游戏信息</text>
+    <button class="empty-btn" bindtap="goToInput">前往录入</button>
+  </view>
+</view>

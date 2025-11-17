@@ -1,0 +1,309 @@
+{
+  "gameSetupRules": {
+    "description": "血染钟楼游戏设置规则，定义不同玩家数量的角色配置",
+
+    "playerCountConfig": {
+      "5": {
+        "townsfolk": 3,
+        "outsiders": 0,
+        "minions": 1,
+        "demons": 1,
+        "note": "5人局最小配置"
+      },
+      "6": {
+        "townsfolk": 3,
+        "outsiders": 1,
+        "minions": 1,
+        "demons": 1
+      },
+      "7": {
+        "townsfolk": 5,
+        "outsiders": 0,
+        "minions": 1,
+        "demons": 1,
+        "note": "经典7人局"
+      },
+      "8": {
+        "townsfolk": 5,
+        "outsiders": 1,
+        "minions": 1,
+        "demons": 1
+      },
+      "9": {
+        "townsfolk": 5,
+        "outsiders": 2,
+        "minions": 1,
+        "demons": 1
+      },
+      "10": {
+        "townsfolk": 7,
+        "outsiders": 0,
+        "minions": 2,
+        "demons": 1,
+        "note": "经典10人局"
+      },
+      "11": {
+        "townsfolk": 7,
+        "outsiders": 1,
+        "minions": 2,
+        "demons": 1
+      },
+      "12": {
+        "townsfolk": 7,
+        "outsiders": 2,
+        "minions": 2,
+        "demons": 1
+      },
+      "13": {
+        "townsfolk": 9,
+        "outsiders": 0,
+        "minions": 3,
+        "demons": 1
+      },
+      "14": {
+        "townsfolk": 9,
+        "outsiders": 1,
+        "minions": 3,
+        "demons": 1
+      },
+      "15": {
+        "townsfolk": 9,
+        "outsiders": 2,
+        "minions": 3,
+        "demons": 1,
+        "note": "大型局"
+      }
+    },
+
+    "setupModifiers": {
+      "baron": {
+        "description": "男爵在场时的修正",
+        "effect": "outsiders +2, townsfolk -2"
+      },
+      "drunk": {
+        "description": "酒鬼占据一个镇民名额但属于外来者",
+        "note": "酒鬼以为自己是镇民，但实际算外来者"
+      }
+    },
+
+    "balanceRules": {
+      "goodVsEvil": "善良阵营通常比邪恶阵营多2-3倍人数",
+      "informationBalance": "镇民提供信息，外来者干扰信息，爪牙破坏信息",
+      "baronEffect": "男爵会让场上外来者异常增多，这是识别男爵的线索"
+    }
+  },
+
+  "gameFlowRules": {
+    "nightPhase": {
+      "description": "夜晚阶段，玩家按顺序被唤醒使用能力",
+      "order": [
+        "首夜准备（分发角色）",
+        "爪牙确认恶魔",
+        "恶魔确认爪牙",
+        "洗衣妇（10）",
+        "图书馆员（11）",
+        "调查员（12）",
+        "厨师（13）",
+        "共情者（14）",
+        "占卜师（15）",
+        "管家（16）",
+        "投毒者（17）",
+        "间谍（18）",
+        "其他夜晚阶段..."
+      ],
+      "rules": [
+        "说书人按顺序表唤醒角色",
+        "被唤醒的玩家执行能力",
+        "恶魔击杀在夜晚阶段最后执行",
+        "玩家在夜晚不能交流"
+      ]
+    },
+
+    "dayPhase": {
+      "description": "白天阶段，玩家讨论、提名、投票",
+      "steps": [
+        {
+          "step": 1,
+          "name": "宣布死讯",
+          "description": "说书人宣布夜晚死亡的玩家"
+        },
+        {
+          "step": 2,
+          "name": "自由讨论",
+          "description": "所有玩家可以自由发言、跳身份、质疑、分享信息",
+          "duration": "通常10-30分钟"
+        },
+        {
+          "step": 3,
+          "name": "提名阶段",
+          "description": "玩家轮流提名要处决的目标",
+          "rules": [
+            "每名玩家每天有1次提名权",
+            "被提名者可发表遗言",
+            "提名后进入投票"
+          ]
+        },
+        {
+          "step": 4,
+          "name": "投票阶段",
+          "description": "举手投票决定是否处决被提名者",
+          "rules": [
+            "存活玩家每天有1次投票权",
+            "死亡玩家整局游戏只有1次投票权",
+            "票数最多且过半的被提名者被处决",
+            "平票则不处决",
+            "每天只能处决1人"
+          ]
+        },
+        {
+          "step": 5,
+          "name": "判断胜负",
+          "description": "检查是否有阵营达成胜利条件"
+        }
+      ]
+    },
+
+    "deathRules": {
+      "nightDeath": "被恶魔击杀或其他夜晚能力",
+      "dayDeath": "被投票处决",
+      "deathPlayerRights": {
+        "canSpeak": true,
+        "canNominate": true,
+        "voteCount": 1,
+        "note": "死亡玩家可以发言和提名，但整局只有1次投票权"
+      },
+      "特殊死亡": {
+        "贞洁者触发": "提名贞洁者的镇民立即死亡",
+        "猎手击杀": "猎手技能可以白天击杀",
+        "小恶魔自杀": "小恶魔可以选择自杀传承给爪牙"
+      }
+    },
+
+    "victoryConditions": {
+      "good": [
+        {
+          "condition": "恶魔被处决",
+          "description": "白天投票处决了恶魔，善良阵营立即获胜",
+          "note": "夜晚击杀恶魔不算（除非没有猩红女）"
+        },
+        {
+          "condition": "市长触发",
+          "description": "剩余3人且当天没有处决，市长在场则善良阵营获胜"
+        }
+      ],
+      "evil": [
+        {
+          "condition": "只剩2人",
+          "description": "只剩2名存活玩家（1个是恶魔），邪恶阵营获胜"
+        },
+        {
+          "condition": "圣徒被处决",
+          "description": "圣徒被投票处决，邪恶阵营立即获胜"
+        }
+      ]
+    }
+  },
+
+  "specialMechanics": {
+    "drunk": {
+      "name": "醉酒",
+      "description": "玩家不知道自己醉酒，能力不生效，获得的信息可能错误",
+      "sources": ["酒鬼角色"],
+      "effect": "该玩家的能力完全失效，说书人可以给予任意信息"
+    },
+
+    "poisoned": {
+      "name": "中毒",
+      "description": "玩家中毒期间能力不生效，信息可能错误",
+      "sources": ["投毒者"],
+      "effect": "持续到次日白天结束，与醉酒类似但玩家可能被治愈",
+      "duration": "当晚+次日白天"
+    },
+
+    "redHerring": {
+      "name": "红鲱鱼",
+      "description": "占卜师会误判一名善良玩家为恶魔",
+      "appliesTo": ["占卜师"],
+      "effect": "说书人在首夜秘密标记一名善良玩家，该玩家在占卜师验人时永远显示为恶魔"
+    },
+
+    "protection": {
+      "name": "保护",
+      "description": "免疫恶魔击杀",
+      "sources": ["僧侣", "士兵"],
+      "僧侣": "每晚选择一名玩家保护（不包括自己）",
+      "士兵": "被动免疫，恶魔无法杀死"
+    },
+
+    "registration": {
+      "name": "身份检测",
+      "description": "某些角色会影响身份检测结果",
+      "隐士": "可能被检测为邪恶/爪牙/恶魔",
+      "间谍": "可能被检测为善良/镇民/外来者"
+    }
+  },
+
+  "interactionRules": {
+    "poisonerVsFortuneTeller": "投毒占卜师会让占卜师得到错误信息",
+    "monkVsImp": "僧侣保护的目标免疫小恶魔击杀",
+    "soldierVsImp": "士兵无法被小恶魔杀死，恶魔会空刀",
+    "spyVsInvestigator": "间谍可能让调查员得到错误信息",
+    "recluseVsInvestigator": "隐士可能被调查员误判为爪牙",
+    "drunkInfo": "酒鬼得到的所有信息都可能是错误的",
+    "scarletWomanActivation": "恶魔死亡时如果≥5人存活，猩红女变成恶魔"
+  },
+
+  "strategicConcepts": {
+    "informationFlow": {
+      "description": "信息流转和验证是核心玩法",
+      "concepts": [
+        "交叉验证：多个信息源互相印证",
+        "矛盾检测：发现逻辑矛盾找出说谎者",
+        "时间轴分析：根据死亡和信息时间推理",
+        "座位分析：结合厨师信息和座位推断邪恶位置"
+      ]
+    },
+
+    "identityClaim": {
+      "description": "跳身份的时机和策略",
+      "timing": [
+        "首日跳：建立信任，引导场上信息流",
+        "中期跳：有足够信息支撑时跳身份",
+        "终局跳：为了投票信任或证明身份",
+        "被质疑时跳：自保"
+      ],
+      "risks": [
+        "过早跳暴露给恶魔",
+        "伪跳被真身份对撞",
+        "跳身份后被投毒/击杀"
+      ]
+    },
+
+    "votingStrategy": {
+      "description": "投票的策略考量",
+      "factors": [
+        "信息可信度",
+        "玩家行为分析",
+        "阵营判断概率",
+        "终局人数计算",
+        "市长胜利条件"
+      ]
+    },
+
+    "evilStrategy": {
+      "description": "邪恶阵营的策略",
+      "demonStrategy": [
+        "伪装成镇民",
+        "合理击杀避免暴露",
+        "利用投毒者制造混乱",
+        "必要时利用小恶魔自杀传承"
+      ],
+      "minionStrategy": [
+        "保护恶魔身份",
+        "投毒关键信息位",
+        "伪装并提供假信息",
+        "必要时牺牲自己保护恶魔"
+      ]
+    }
+  }
+}

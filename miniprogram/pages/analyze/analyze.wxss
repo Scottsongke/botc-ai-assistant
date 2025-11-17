@@ -1,0 +1,396 @@
+/* 分析页面样式 */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f5f7fa, #ffffff);
+  padding: 20rpx;
+}
+
+/* 顶部标题 */
+.header {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #7f8c8d;
+}
+
+/* 游戏信息卡片 */
+.game-info {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin: 20rpx 0;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #7f8c8d;
+  width: 120rpx;
+}
+
+.value {
+  font-size: 30rpx;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* 分析选项 */
+.options {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin: 20rpx 0;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28rpx;
+  color: #2c3e50;
+}
+
+.option-tip {
+  margin-top: 15rpx;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #95a5a6;
+}
+
+/* 分析按钮 */
+.analyze-btn {
+  margin: 40rpx 0;
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 32rpx;
+  border-radius: 50rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 8rpx 16rpx rgba(102, 126, 234, 0.3);
+}
+
+.analyze-btn:active {
+  opacity: 0.8;
+}
+
+/* 错误信息 */
+.error {
+  background: #fff3f3;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin: 20rpx 0;
+  display: flex;
+  align-items: center;
+  border-left: 6rpx solid #e74c3c;
+}
+
+.error-icon {
+  font-size: 32rpx;
+  margin-right: 15rpx;
+}
+
+.error-text {
+  font-size: 26rpx;
+  color: #e74c3c;
+  flex: 1;
+}
+
+/* 结果区域 */
+.results {
+  margin-top: 30rpx;
+}
+
+.result-section {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #ecf0f1;
+}
+
+.section-title .icon {
+  font-size: 36rpx;
+  margin-right: 15rpx;
+}
+
+.section-title .title-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* 矛盾列表 */
+.contradiction-list {
+  margin-top: 15rpx;
+}
+
+.contradiction-item {
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  margin-bottom: 15rpx;
+}
+
+.contradiction-item:last-child {
+  margin-bottom: 0;
+}
+
+.contradiction-severity {
+  display: inline-block;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
+  margin-bottom: 10rpx;
+}
+
+.severity-high {
+  background: #fee;
+  color: #e74c3c;
+}
+
+.severity-medium {
+  background: #fff3e0;
+  color: #f39c12;
+}
+
+.severity-low {
+  background: #e8f5e9;
+  color: #27ae60;
+}
+
+.contradiction-message {
+  display: block;
+  font-size: 28rpx;
+  color: #2c3e50;
+  margin-bottom: 8rpx;
+  line-height: 1.6;
+}
+
+.contradiction-implication {
+  display: block;
+  font-size: 26rpx;
+  color: #7f8c8d;
+  line-height: 1.5;
+}
+
+/* 嫌疑列表 */
+.suspect-list {
+  margin-top: 15rpx;
+}
+
+.suspect-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 2rpx solid #ecf0f1;
+}
+
+.suspect-item:last-child {
+  border-bottom: none;
+}
+
+.suspect-rank {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 28rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.suspect-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.suspect-name {
+  font-size: 30rpx;
+  color: #2c3e50;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+
+.suspect-prob {
+  font-size: 24rpx;
+  color: #7f8c8d;
+}
+
+.suspect-bar {
+  width: 200rpx;
+  height: 12rpx;
+  background: #ecf0f1;
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-left: 20rpx;
+}
+
+.suspect-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e74c3c 0%, #f39c12 100%);
+  transition: width 0.3s ease;
+}
+
+/* AI分析 */
+.llm-analysis {
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  border-left: 6rpx solid #667eea;
+}
+
+.llm-text {
+  font-size: 28rpx;
+  color: #2c3e50;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.llm-info {
+  margin-top: 15rpx;
+  text-align: right;
+}
+
+.llm-tokens {
+  font-size: 22rpx;
+  color: #95a5a6;
+}
+
+/* 策略建议 */
+.strategy-list {
+  margin-top: 15rpx;
+}
+
+.strategy-category {
+  margin-bottom: 25rpx;
+}
+
+.strategy-category:last-child {
+  margin-bottom: 0;
+}
+
+.category-title {
+  display: block;
+  font-size: 26rpx;
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 15rpx;
+}
+
+.strategy-item {
+  padding: 15rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.strategy-item:last-child {
+  margin-bottom: 0;
+}
+
+.strategy-action {
+  display: block;
+  font-size: 28rpx;
+  color: #2c3e50;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+
+.strategy-reason {
+  display: block;
+  font-size: 26rpx;
+  color: #7f8c8d;
+  line-height: 1.5;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+
+.action-btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+  background: white;
+  border: 2rpx solid #667eea;
+  color: #667eea;
+}
+
+.action-btn:active {
+  background: #f8f9fa;
+}
+
+/* 空状态 */
+.empty {
+  text-align: center;
+  padding: 100rpx 40rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  display: block;
+}
+
+.empty-text {
+  display: block;
+  font-size: 30rpx;
+  color: #7f8c8d;
+  margin-bottom: 40rpx;
+}
+
+.empty-btn {
+  width: 400rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+}

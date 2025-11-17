@@ -1,0 +1,191 @@
+{
+  "scenario": "7人局测试场景",
+  "description": "模拟一个典型的7人局，第2天的游戏状态",
+
+  "gameConfig": {
+    "script": "trouble-brewing",
+    "playerCount": 7,
+    "currentDay": 2,
+    "currentNight": 2
+  },
+
+  "players": [
+    {
+      "id": "P1",
+      "name": "玩家1",
+      "seatNumber": 0,
+      "alive": true,
+      "isMe": true,
+      "myRole": {
+        "type": "占卜师",
+        "category": "townsfolk",
+        "team": "good"
+      },
+      "claimedRole": null,
+      "deathNight": null,
+      "votesRemaining": 1
+    },
+    {
+      "id": "P2",
+      "name": "玩家2",
+      "seatNumber": 1,
+      "alive": true,
+      "isMe": false,
+      "claimedRole": "占卜师",
+      "deathNight": null,
+      "votesRemaining": 1
+    },
+    {
+      "id": "P3",
+      "name": "玩家3",
+      "seatNumber": 2,
+      "alive": false,
+      "isMe": false,
+      "claimedRole": "洗衣妇",
+      "deathNight": 1,
+      "knownRole": "洗衣妇",
+      "votesRemaining": 1
+    },
+    {
+      "id": "P4",
+      "name": "玩家4",
+      "seatNumber": 3,
+      "alive": true,
+      "isMe": false,
+      "claimedRole": "共情者",
+      "deathNight": null,
+      "votesRemaining": 1
+    },
+    {
+      "id": "P5",
+      "name": "玩家5",
+      "seatNumber": 4,
+      "alive": true,
+      "isMe": false,
+      "claimedRole": null,
+      "deathNight": null,
+      "votesRemaining": 1
+    },
+    {
+      "id": "P6",
+      "name": "玩家6",
+      "seatNumber": 5,
+      "alive": true,
+      "isMe": false,
+      "claimedRole": "僧侣",
+      "deathNight": null,
+      "votesRemaining": 1
+    },
+    {
+      "id": "P7",
+      "name": "玩家7",
+      "seatNumber": 6,
+      "alive": true,
+      "isMe": false,
+      "claimedRole": null,
+      "deathNight": null,
+      "votesRemaining": 1
+    }
+  ],
+
+  "allClaims": [
+    {
+      "player": "P2",
+      "claimedRole": "占卜师",
+      "day": 1,
+      "info": [
+        {
+          "night": 1,
+          "targets": ["P5", "P7"],
+          "result": "has_demon"
+        }
+      ]
+    },
+    {
+      "player": "P3",
+      "claimedRole": "洗衣妇",
+      "day": 1,
+      "info": {
+        "about": [
+          {
+            "player": "P1",
+            "possibleRole": "占卜师"
+          }
+        ]
+      }
+    },
+    {
+      "player": "P4",
+      "claimedRole": "共情者",
+      "day": 1,
+      "seatNumber": 3,
+      "info": [
+        {
+          "night": 1,
+          "evilCount": 1
+        },
+        {
+          "night": 2,
+          "evilCount": 0
+        }
+      ]
+    },
+    {
+      "player": "P6",
+      "claimedRole": "僧侣",
+      "day": 2
+    }
+  ],
+
+  "nightDeaths": [
+    {
+      "night": 1,
+      "players": ["P3"]
+    }
+  ],
+
+  "dayVotes": [
+    {
+      "day": 1,
+      "nominations": [
+        {
+          "nominator": "P2",
+          "nominee": "P5",
+          "voters": ["P2", "P4", "P6"],
+          "voteCount": 3,
+          "executed": false
+        }
+      ]
+    }
+  ],
+
+  "myAbilityResults": [
+    {
+      "night": 1,
+      "targets": ["P2", "P4"],
+      "result": "no_demon"
+    }
+  ],
+
+  "expectedAnalysis": {
+    "contradictions": [
+      "玩家1和玩家2都是占卜师，至少一人在说谎"
+    ],
+    "keyDeductions": [
+      "P3(洗衣妇)说P1可能是占卜师，支持P1的身份",
+      "P4(共情者)第2夜数字从1变0，说明邻居P3死亡（P3是善良）或P5阵营判断需更新"
+    ],
+    "suspiciousPlayers": [
+      "P2 - 与P1对撞占卜师",
+      "P5 - 被P2验出可能是恶魔，且未跳身份",
+      "P7 - 未跳身份，被P2验出可能是恶魔"
+    ],
+    "recommendedAction": {
+      "tonight": "验P5和P7，确认谁是恶魔",
+      "tomorrow": "考虑跳占卜师，揭穿P2",
+      "voting": "建议投票给P2（假占卜师）或P5/P7（可能的恶魔）"
+    }
+  },
+
+  "notes": "这是一个经典的占卜师对撞场景，需要分析谁是真占卜师"
+}
